@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us — Ruchulu</title>
+<meta name="description" content="Get in touch with Ruchulu for orders, bulk enquiries, or feedback.">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="images/logo.png" alt="Ruchulu — Pickles & Snacks" class="site-logo">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="shop.html?category=Pickles">Pickles</a></li>
+      <li><a href="shop.html?category=Snacks">Snacks</a></li>
+      <li><a href="about.html">Our Story</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <form class="nav-search" id="navSearchForm">
+      <span data-icon="search" style="position:absolute; left:13px; color:rgba(58,42,31,0.5); display:flex;"></span>
+      <input type="search" id="navSearchInput" placeholder="Search for pickles, podis...">
+    </form>
+    <div class="nav-actions">
+      <button class="icon-btn" id="menuToggle" aria-label="Open menu"><span data-icon="menu"></span></button>
+      <span data-auth-slot></span>
+      <a class="icon-btn" href="shop.html?wishlist=1" aria-label="Wishlist"><span data-icon="heart"></span><span class="badge-count" data-wishlist-count>0</span></a>
+      <button class="cart-btn" data-open-cart><span data-icon="cart"></span> Cart <span class="badge-count" data-cart-count>0</span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="scrim" id="scrim"></div>
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu"><span data-icon="close"></span></button>
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop All</a>
+  <a href="shop.html?category=Pickles">Pickles</a>
+  <a href="shop.html?category=Snacks">Snacks</a>
+  <a href="shop.html?category=Podis">Podis</a>
+  <a href="shop.html?category=Hampers">Gift Hampers</a>
+  <a href="about.html">Our Story</a>
+  <a href="contact.html">Contact</a>
+  <a href="cart.html">View Cart</a>
+  <a href="orders.html">My Orders</a>
+</div>
+
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-head">
+    <h3>Your Cart</h3>
+    <button id="cartDrawerClose" aria-label="Close cart"><span data-icon="close"></span></button>
+  </div>
+  <div class="cart-drawer-body" id="cartDrawerBody"></div>
+  <div class="cart-drawer-foot" id="cartDrawerFoot" style="display:none">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cartDrawerSubtotal">₹0</span></div>
+    <p class="cart-note">Shipping and taxes calculated at checkout.</p>
+    <a href="cart.html" class="btn-primary btn-block">View Cart &amp; Checkout</a>
+  </div>
+</div>
+
+<div class="page-header">
+  <div class="eyebrow" style="justify-content:center">Contact</div>
+  <h1>We'd love to hear from you</h1>
+  <div class="breadcrumb"><a href="index.html">Home</a> / <span>Contact</span></div>
+</div>
+
+<section class="section">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div>
+        <div class="contact-card">
+          <span data-icon="phone"></span>
+          <div><h5>Call or WhatsApp</h5><p><a href="tel:8247699591">82476 99591</a></p></div>
+        </div>
+        <div class="contact-card">
+          <span data-icon="mail"></span>
+          <div><h5>Email</h5><p><a href="mailto:pexxoraa@gmail.com">pexxoraa@gmail.com</a></p></div>
+        </div>
+        <div class="contact-card">
+          <span data-icon="pin"></span>
+          <div><h5>Based in</h5><p>Andhra Pradesh, India — shipping pan-India</p></div>
+        </div>
+        <div class="contact-card">
+          <span data-icon="chat"></span>
+          <div><h5>Response time</h5><p>We usually reply within 24 hours, every day of the week</p></div>
+        </div>
+      </div>
+
+      <form id="contactForm">
+        <div class="form-field">
+          <label for="cf-name">Full name</label>
+          <input id="cf-name" type="text" required placeholder="Your name">
+        </div>
+        <div class="form-field">
+          <label for="cf-email">Email</label>
+          <input id="cf-email" type="email" required placeholder="you@example.com">
+        </div>
+        <div class="form-field">
+          <label for="cf-subject">Subject</label>
+          <input id="cf-subject" type="text" required placeholder="Order query, bulk order, feedback...">
+        </div>
+        <div class="form-field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" required placeholder="How can we help?"></textarea>
+        </div>
+        <button type="submit" class="btn-primary btn-block">Send Message</button>
+        <p class="cart-note" id="contactFormStatus" style="margin-top:14px; text-align:center;"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="footer-logo-wrap"><img src="images/logo.png" alt="Ruchulu" class="footer-logo-img"></div>
+        </div>
+        <p>Authentic Telugu pickles, snacks, sweets and spices — homemade in small batches and shipped across India.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><span data-icon="instagram"></span></a>
+          <a href="#" aria-label="WhatsApp"><span data-icon="whatsapp"></span></a>
+          <a href="#" aria-label="Facebook"><span data-icon="facebook"></span></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Shop</h5>
+        <a href="shop.html?category=Pickles">Pickles</a>
+        <a href="shop.html?category=Snacks">Snacks</a>
+        <a href="shop.html?category=Podis">Podis</a>
+        <a href="shop.html?category=Hampers">Gift Hampers</a>
+        <a href="shop.html">All Products</a>
+      </div>
+      <div class="footer-col">
+        <h5>Account</h5>
+        <a href="orders.html">My Orders</a>
+        <a href="login.html" data-guest-only>Login</a>
+        <a href="register.html" data-guest-only>Create Account</a>
+        <a href="cart.html">Cart</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="shipping-policy.html">Shipping Policy</a>
+        <a href="refund-policy.html">Refund Policy</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="tel:8247699591"><span data-icon="phone"></span> 82476 99591</a>
+        <a href="mailto:pexxoraa@gmail.com"><span data-icon="mail"></span> pexxoraa@gmail.com</a>
+        <a href="contact.html"><span data-icon="chat"></span> Contact Us</a>
+        <a href="#"><span data-icon="pin"></span> Andhra Pradesh, India</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Ruchulu. All rights reserved.</span>
+      <span>Made for authentic Telugu flavors</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

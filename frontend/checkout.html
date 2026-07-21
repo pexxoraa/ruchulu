@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — Ruchulu</title>
+<meta name="description" content="Complete your Ruchulu order.">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="images/logo.png" alt="Ruchulu — Pickles & Snacks" class="site-logo">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="shop.html?category=Pickles" class="active">Pickles</a></li>
+      <li><a href="shop.html?category=Snacks" class="active">Snacks</a></li>
+      <li><a href="about.html">Our Story</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <form class="nav-search" id="navSearchForm">
+      <span data-icon="search" style="position:absolute; left:13px; color:rgba(58,42,31,0.5); display:flex;"></span>
+      <input type="search" id="navSearchInput" placeholder="Search for pickles, podis...">
+    </form>
+    <div class="nav-actions">
+      <button class="icon-btn" id="menuToggle" aria-label="Open menu"><span data-icon="menu"></span></button>
+      <span data-auth-slot></span>
+      <a class="icon-btn" href="shop.html?wishlist=1" aria-label="Wishlist"><span data-icon="heart"></span><span class="badge-count" data-wishlist-count>0</span></a>
+      <button class="cart-btn" data-open-cart><span data-icon="cart"></span> Cart <span class="badge-count" data-cart-count>0</span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="scrim" id="scrim"></div>
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu"><span data-icon="close"></span></button>
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop All</a>
+  <a href="shop.html?category=Pickles">Pickles</a>
+  <a href="shop.html?category=Snacks">Snacks</a>
+  <a href="shop.html?category=Podis">Podis</a>
+  <a href="shop.html?category=Hampers">Gift Hampers</a>
+  <a href="about.html">Our Story</a>
+  <a href="contact.html">Contact</a>
+  <a href="cart.html">View Cart</a>
+  <a href="orders.html">My Orders</a>
+</div>
+
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-head">
+    <h3>Your Cart</h3>
+    <button id="cartDrawerClose" aria-label="Close cart"><span data-icon="close"></span></button>
+  </div>
+  <div class="cart-drawer-body" id="cartDrawerBody"></div>
+  <div class="cart-drawer-foot" id="cartDrawerFoot" style="display:none">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cartDrawerSubtotal">₹0</span></div>
+    <p class="cart-note">Shipping and taxes calculated at checkout.</p>
+    <a href="cart.html" class="btn-primary btn-block">View Cart &amp; Checkout</a>
+  </div>
+</div>
+
+<div class="page-header">
+  <div class="eyebrow" style="justify-content:center">Checkout</div>
+  <h1>Complete Your Order</h1>
+  <div class="breadcrumb"><a href="index.html">Home</a> / <a href="cart.html">Cart</a> / <span>Checkout</span></div>
+</div>
+
+<section class="section" style="padding-top:40px;">
+  <div class="wrap">
+
+    <div id="checkoutBlocked" style="display:none;" class="cart-empty-page">
+      <span data-icon="lock"></span>
+      <h3 id="blockedTitle">Checkout unavailable</h3>
+      <p style="color:rgba(58,42,31,0.6); margin:14px 0 26px;" id="blockedMessage"></p>
+      <a href="cart.html" class="btn-primary">Back to Cart</a>
+    </div>
+
+    <div class="checkout-layout" id="checkoutLayout" style="display:none;">
+      <div class="checkout-main">
+
+        <div class="checkout-step">
+          <h3><span class="step-num">1</span> Delivery Address</h3>
+          <div class="address-list" id="addressList"></div>
+          <span class="add-address-toggle" id="toggleAddressForm">+ Add a new address</span>
+
+          <form class="address-form" id="addressForm">
+            <div class="address-form-grid">
+              <div class="form-field full">
+                <label for="ad-name">Full name</label>
+                <input id="ad-name" required placeholder="Recipient's name">
+              </div>
+              <div class="form-field">
+                <label for="ad-phone">Phone</label>
+                <input id="ad-phone" required placeholder="10-digit mobile number" pattern="[6-9][0-9]{9}">
+              </div>
+              <div class="form-field">
+                <label for="ad-pincode">Pincode</label>
+                <input id="ad-pincode" required placeholder="6-digit pincode" pattern="[0-9]{6}">
+              </div>
+              <div class="form-field full">
+                <label for="ad-line1">Address line 1</label>
+                <input id="ad-line1" required placeholder="House no., street, area">
+              </div>
+              <div class="form-field full">
+                <label for="ad-line2">Address line 2 (optional)</label>
+                <input id="ad-line2" placeholder="Landmark, apartment, etc.">
+              </div>
+              <div class="form-field">
+                <label for="ad-city">City</label>
+                <input id="ad-city" required placeholder="City">
+              </div>
+              <div class="form-field">
+                <label for="ad-state">State</label>
+                <input id="ad-state" required placeholder="State">
+              </div>
+            </div>
+            <button type="submit" class="btn-secondary" style="margin-top:6px;">Save Address</button>
+          </form>
+        </div>
+
+        <div class="checkout-step">
+          <h3><span class="step-num">2</span> Payment Method</h3>
+          <div class="payment-options">
+            <label class="payment-option selected" data-method="COD">
+              <input type="radio" name="paymentMethod" value="COD" checked>
+              <span data-icon="package"></span>
+              <span>
+                <span class="payment-option-title" style="display:block;">Cash on Delivery</span>
+                <span class="payment-option-sub">Pay when your order arrives</span>
+              </span>
+            </label>
+            <label class="payment-option" data-method="RAZORPAY">
+              <input type="radio" name="paymentMethod" value="RAZORPAY">
+              <span data-icon="lock"></span>
+              <span>
+                <span class="payment-option-title" style="display:block;">Pay Online (Razorpay)</span>
+                <span class="payment-option-sub">Card, UPI, netbanking &amp; wallets</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="auth-banner" id="checkoutBanner"></div>
+
+        <button class="btn-primary btn-block auth-submit" id="placeOrderBtn" style="padding:17px;">
+          <span class="spinner"></span><span class="btn-label" id="placeOrderLabel">Place Order</span>
+        </button>
+      </div>
+
+      <div class="checkout-summary">
+        <h3 style="margin-bottom:18px;">Order Summary</h3>
+        <div id="checkoutItems"></div>
+        <div class="summary-row" style="margin-top:14px;"><span>Subtotal</span><span id="sumSubtotal">₹0</span></div>
+        <div class="summary-row"><span>Delivery</span><span id="sumShipping">₹0</span></div>
+        <div class="summary-row total"><span>Total</span><span id="sumTotal">₹0</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="footer-logo-wrap"><img src="images/logo.png" alt="Ruchulu" class="footer-logo-img"></div>
+        </div>
+        <p>Authentic Telugu pickles, snacks, sweets and spices — homemade in small batches and shipped across India.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><span data-icon="instagram"></span></a>
+          <a href="#" aria-label="WhatsApp"><span data-icon="whatsapp"></span></a>
+          <a href="#" aria-label="Facebook"><span data-icon="facebook"></span></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Shop</h5>
+        <a href="shop.html?category=Pickles">Pickles</a>
+        <a href="shop.html?category=Snacks">Snacks</a>
+        <a href="shop.html?category=Podis">Podis</a>
+        <a href="shop.html?category=Hampers">Gift Hampers</a>
+        <a href="shop.html">All Products</a>
+      </div>
+      <div class="footer-col">
+        <h5>Account</h5>
+        <a href="orders.html">My Orders</a>
+        <a href="login.html" data-guest-only>Login</a>
+        <a href="register.html" data-guest-only>Create Account</a>
+        <a href="cart.html">Cart</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="shipping-policy.html">Shipping Policy</a>
+        <a href="refund-policy.html">Refund Policy</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="tel:8247699591"><span data-icon="phone"></span> 82476 99591</a>
+        <a href="mailto:pexxoraa@gmail.com"><span data-icon="mail"></span> pexxoraa@gmail.com</a>
+        <a href="contact.html"><span data-icon="chat"></span> Contact Us</a>
+        <a href="#"><span data-icon="pin"></span> Andhra Pradesh, India</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Ruchulu. All rights reserved.</span>
+      <span>Made for authentic Telugu flavors</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+(function(){
+  const layout = document.getElementById("checkoutLayout");
+  const blocked = document.getElementById("checkoutBlocked");
+  const banner = document.getElementById("checkoutBanner");
+
+  function showBlocked(title, message){
+    blocked.style.display = "block";
+    layout.style.display = "none";
+    document.getElementById("blockedTitle").textContent = title;
+    document.getElementById("blockedMessage").textContent = message;
+  }
+  function showBanner(message, type){
+    banner.textContent = message;
+    banner.className = "auth-banner show " + type;
+  }
+
+  if (!AuthStore.isLoggedIn()) {
+    window.location.href = "login.html?redirect=checkout.html";
+    return;
+  }
+
+  let selectedAddressId = null;
+  let addresses = [];
+
+  function renderSummary(){
+    const lines = getValidCartLines();
+    const container = document.getElementById("checkoutItems");
+    container.innerHTML = lines.map(line => {
+      const p = getProduct(line.id);
+      return `<div class="checkout-line">
+        <div class="checkout-line-media"><img src="${p.img}" alt="${p.name}"></div>
+        <div>
+          <div class="checkout-line-name">${p.name}</div>
+          <div class="checkout-line-meta">${line.weight} × ${line.qty}</div>
+        </div>
+        <div class="checkout-line-price">₹${cartLinePrice(line)}</div>
+      </div>`;
+    }).join("");
+    const subtotal = cartSubtotal();
+    const shipping = subtotal >= 999 || subtotal === 0 ? 0 : 60;
+    document.getElementById("sumSubtotal").textContent = "₹" + subtotal;
+    document.getElementById("sumShipping").textContent = shipping === 0 ? "Free" : "₹" + shipping;
+    document.getElementById("sumTotal").textContent = "₹" + (subtotal + shipping);
+  }
+
+  function renderAddresses(){
+    const list = document.getElementById("addressList");
+    if(addresses.length === 0){
+      list.innerHTML = `<p style="font-size:13.5px; color:rgba(58,42,31,0.55);">No saved addresses yet — add one below.</p>`;
+      return;
+    }
+    if(!selectedAddressId) selectedAddressId = (addresses.find(a=>a.isDefault) || addresses[0]).id;
+    list.innerHTML = addresses.map(a => `
+      <label class="address-card ${a.id===selectedAddressId?'selected':''}" data-address-id="${a.id}">
+        <input type="radio" name="addressChoice" value="${a.id}" ${a.id===selectedAddressId?'checked':''}>
+        <div>
+          <div class="address-card-name">${a.fullName}${a.isDefault ? '<span class="address-card-tag">Default</span>' : ''}</div>
+          <div class="address-card-detail">${a.line1}${a.line2 ? ', '+a.line2 : ''}, ${a.city}, ${a.state} ${a.pincode}<br>Phone: ${a.phone}</div>
+        </div>
+      </label>
+    `).join("");
+    list.querySelectorAll(".address-card").forEach(card => {
+      card.addEventListener("click", () => {
+        selectedAddressId = card.dataset.addressId;
+        list.querySelectorAll(".address-card").forEach(c => c.classList.toggle("selected", c===card));
+      });
+    });
+  }
+
+  async function loadAddresses(){
+    try {
+      const json = await apiFetchJson("/users/me/addresses");
+      addresses = json.data || [];
+      renderAddresses();
+    } catch(err){
+      showBanner("Couldn't load your saved addresses: " + err.message, "error");
+    }
+  }
+
+  document.getElementById("toggleAddressForm").addEventListener("click", () => {
+    document.getElementById("addressForm").classList.toggle("show");
+  });
+
+  document.getElementById("addressForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    try {
+      const json = await apiFetchJson("/users/me/addresses", {
+        method: "POST",
+        body: JSON.stringify({
+          fullName: document.getElementById("ad-name").value.trim(),
+          phone: document.getElementById("ad-phone").value.trim(),
+          line1: document.getElementById("ad-line1").value.trim(),
+          line2: document.getElementById("ad-line2").value.trim() || undefined,
+          city: document.getElementById("ad-city").value.trim(),
+          state: document.getElementById("ad-state").value.trim(),
+          pincode: document.getElementById("ad-pincode").value.trim(),
+        }),
+      });
+      addresses.push(json.data);
+      selectedAddressId = json.data.id;
+      renderAddresses();
+      e.target.reset();
+      e.target.classList.remove("show");
+      showToast("Address saved");
+    } catch(err){
+      showBanner(err.details?.[0]?.message || err.message || "Couldn't save that address", "error");
+    }
+  });
+
+  document.querySelectorAll(".payment-option").forEach(opt => {
+    opt.addEventListener("click", () => {
+      document.querySelectorAll(".payment-option").forEach(o => o.classList.remove("selected"));
+      opt.classList.add("selected");
+      opt.querySelector('input[type="radio"]').checked = true;
+    });
+  });
+
+  async function syncLocalCartToBackend(){
+    // Push each locally-held cart line into the backend's user cart,
+    // resolving canonical product/variant IDs fresh from the API rather
+    // than trusting potentially-stale local state. The backend cart is
+    // cleared first so a second checkout attempt (e.g. after an
+    // abandoned payment) can't double up quantities on top of whatever
+    // was already synced there last time.
+    await apiFetch("/cart", { method: "DELETE" });
+    for(const line of getValidCartLines()){
+      const detail = await apiFetchJson(`/products/${line.id}`);
+      const product = detail.data;
+      const variant = (product.variants || []).find(v => v.label === line.weight) || product.variants[0];
+      if(!variant) throw new Error(`${product.name} is no longer available`);
+      await apiFetchJson("/cart/items", {
+        method: "POST",
+        body: JSON.stringify({ productId: product.id, variantId: variant.id, quantity: line.qty }),
+      });
+    }
+  }
+
+  async function loadRazorpayScript(){
+    if(window.Razorpay) return true;
+    return new Promise((resolve) => {
+      const check = setInterval(() => { if(window.Razorpay){ clearInterval(check); resolve(true); } }, 100);
+      setTimeout(() => { clearInterval(check); resolve(!!window.Razorpay); }, 4000);
+    });
+  }
+
+  document.getElementById("placeOrderBtn").addEventListener("click", async () => {
+    banner.classList.remove("show");
+
+    if(getValidCartLines().length === 0){ showBanner("Your cart is empty.", "error"); return; }
+    if(!selectedAddressId){ showBanner("Please select or add a delivery address.", "error"); return; }
+
+    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    const btn = document.getElementById("placeOrderBtn");
+    btn.classList.add("loading"); btn.disabled = true;
+    document.getElementById("placeOrderLabel").textContent = "Placing order...";
+
+    try {
+      await syncLocalCartToBackend();
+
+      const orderRes = await apiFetchJson("/orders", {
+        method: "POST",
+        body: JSON.stringify({ addressId: selectedAddressId, paymentMethod }),
+      });
+
+      const order = orderRes.data.order;
+
+      if(paymentMethod === "COD"){
+        Store.setCart([]);
+        window.location.href = `order-confirmation.html?orderId=${order.id}`;
+        return;
+      }
+
+      // RAZORPAY — open the Checkout widget with the order the backend created
+      const checkoutInfo = orderRes.data.razorpayCheckout;
+      if(!checkoutInfo){ throw new Error("Couldn't start online payment. Please try again or choose Cash on Delivery."); }
+
+      const ready = await loadRazorpayScript();
+      if(!ready){ throw new Error("Couldn't load the payment widget. Please check your connection and try again."); }
+
+      const user = AuthStore.getUser();
+      const rzp = new Razorpay({
+        key: checkoutInfo.keyId,
+        amount: checkoutInfo.amount,
+        currency: checkoutInfo.currency || "INR",
+        order_id: checkoutInfo.providerOrderId,
+        name: "Ruchulu",
+        description: `Order ${order.orderNumber}`,
+        prefill: { name: user?.fullName || "", email: user?.email || "", contact: user?.phone || "" },
+        theme: { color: "#7B1E1E" },
+        handler: async function(response){
+          try {
+            await apiFetchJson(`/orders/${order.id}/verify-payment`, {
+              method: "POST",
+              body: JSON.stringify({
+                razorpayOrderId: response.razorpay_order_id,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpaySignature: response.razorpay_signature,
+              }),
+            });
+            Store.setCart([]);
+            window.location.href = `order-confirmation.html?orderId=${order.id}`;
+          } catch(err){
+            showBanner("Payment was received but verification failed: " + err.message + " — please contact support with your order number " + order.orderNumber, "error");
+          }
+        },
+        modal: {
+          ondismiss: function(){
+            btn.classList.remove("loading"); btn.disabled = false;
+            document.getElementById("placeOrderLabel").textContent = "Place Order";
+            showBanner("Payment cancelled. Your order is saved as pending — you can retry from My Orders.", "error");
+          },
+        },
+      });
+      rzp.open();
+      btn.classList.remove("loading"); btn.disabled = false;
+      document.getElementById("placeOrderLabel").textContent = "Place Order";
+    } catch(err){
+      showBanner(err.message || "Couldn't place your order. Please try again.", "error");
+      btn.classList.remove("loading"); btn.disabled = false;
+      document.getElementById("placeOrderLabel").textContent = "Place Order";
+    }
+  });
+
+  async function init(){
+    const synced = await syncCatalogWithBackend();
+    if(!synced || !catalogIsLive){
+      showBlocked(
+        "Live checkout isn't available right now",
+        "We couldn't reach the Ruchulu servers to verify stock and pricing. Please make sure the backend is running, then try again from your cart."
+      );
+      return;
+    }
+    if(getValidCartLines().length === 0){
+      showBlocked("Your cart is empty", "Add something from the shop before checking out.");
+      return;
+    }
+    blocked.style.display = "none";
+    layout.style.display = "grid";
+    renderSummary();
+    await loadAddresses();
+  }
+  init();
+})();
+</script>
+</body>
+</html>

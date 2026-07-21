@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmation — Ruchulu</title>
+<meta name="description" content="Your Ruchulu order confirmation.">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="images/logo.png" alt="Ruchulu — Pickles & Snacks" class="site-logo">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="shop.html?category=Pickles" class="active">Pickles</a></li>
+      <li><a href="shop.html?category=Snacks" class="active">Snacks</a></li>
+      <li><a href="about.html">Our Story</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <form class="nav-search" id="navSearchForm">
+      <span data-icon="search" style="position:absolute; left:13px; color:rgba(58,42,31,0.5); display:flex;"></span>
+      <input type="search" id="navSearchInput" placeholder="Search for pickles, podis...">
+    </form>
+    <div class="nav-actions">
+      <button class="icon-btn" id="menuToggle" aria-label="Open menu"><span data-icon="menu"></span></button>
+      <span data-auth-slot></span>
+      <a class="icon-btn" href="shop.html?wishlist=1" aria-label="Wishlist"><span data-icon="heart"></span><span class="badge-count" data-wishlist-count>0</span></a>
+      <button class="cart-btn" data-open-cart><span data-icon="cart"></span> Cart <span class="badge-count" data-cart-count>0</span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="scrim" id="scrim"></div>
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu"><span data-icon="close"></span></button>
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop All</a>
+  <a href="shop.html?category=Pickles">Pickles</a>
+  <a href="shop.html?category=Snacks">Snacks</a>
+  <a href="shop.html?category=Podis">Podis</a>
+  <a href="shop.html?category=Hampers">Gift Hampers</a>
+  <a href="about.html">Our Story</a>
+  <a href="contact.html">Contact</a>
+  <a href="cart.html">View Cart</a>
+  <a href="orders.html">My Orders</a>
+</div>
+
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-head">
+    <h3>Your Cart</h3>
+    <button id="cartDrawerClose" aria-label="Close cart"><span data-icon="close"></span></button>
+  </div>
+  <div class="cart-drawer-body" id="cartDrawerBody"></div>
+  <div class="cart-drawer-foot" id="cartDrawerFoot" style="display:none">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cartDrawerSubtotal">₹0</span></div>
+    <p class="cart-note">Shipping and taxes calculated at checkout.</p>
+    <a href="cart.html" class="btn-primary btn-block">View Cart &amp; Checkout</a>
+  </div>
+</div>
+
+<div class="section" style="padding-top:20px;">
+  <div class="wrap">
+
+    <div id="confLoading" style="text-align:center; padding:80px 20px; color:rgba(58,42,31,0.5);">Loading your order...</div>
+
+    <div id="confError" style="display:none;" class="cart-empty-page">
+      <span data-icon="package"></span>
+      <h3>Order not found</h3>
+      <p style="color:rgba(58,42,31,0.6); margin:14px 0 26px;" id="confErrorMsg"></p>
+      <a href="orders.html" class="btn-primary">View My Orders</a>
+    </div>
+
+    <div id="confContent" style="display:none;">
+      <div class="confirmation-hero">
+        <div class="confirmation-check"><span data-icon="check"></span></div>
+        <h1>Order Placed!</h1>
+        <p style="color:rgba(58,42,31,0.65); margin-top:8px;">Thank you — your order has been received.</p>
+      </div>
+
+      <div style="max-width:640px; margin:0 auto;">
+        <div class="order-card">
+          <div class="order-card-head">
+            <div>
+              <div class="order-card-number" id="confOrderNumber"></div>
+              <div class="order-card-date" id="confOrderDate"></div>
+            </div>
+            <span class="status-badge" id="confStatusBadge"></span>
+          </div>
+          <div id="confItems"></div>
+          <div class="order-card-foot">
+            <span>Delivering to <strong id="confAddressName"></strong></span>
+            <span class="order-card-total" id="confTotal"></span>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:24px;">
+          <a href="orders.html" class="btn-secondary" style="flex:1;">View My Orders</a>
+          <a href="shop.html" class="btn-primary" style="flex:1;">Continue Shopping</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="footer-logo-wrap"><img src="images/logo.png" alt="Ruchulu" class="footer-logo-img"></div>
+        </div>
+        <p>Authentic Telugu pickles, snacks, sweets and spices — homemade in small batches and shipped across India.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><span data-icon="instagram"></span></a>
+          <a href="#" aria-label="WhatsApp"><span data-icon="whatsapp"></span></a>
+          <a href="#" aria-label="Facebook"><span data-icon="facebook"></span></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Shop</h5>
+        <a href="shop.html?category=Pickles">Pickles</a>
+        <a href="shop.html?category=Snacks">Snacks</a>
+        <a href="shop.html?category=Podis">Podis</a>
+        <a href="shop.html?category=Hampers">Gift Hampers</a>
+        <a href="shop.html">All Products</a>
+      </div>
+      <div class="footer-col">
+        <h5>Account</h5>
+        <a href="orders.html">My Orders</a>
+        <a href="login.html" data-guest-only>Login</a>
+        <a href="register.html" data-guest-only>Create Account</a>
+        <a href="cart.html">Cart</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="shipping-policy.html">Shipping Policy</a>
+        <a href="refund-policy.html">Refund Policy</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="tel:8247699591"><span data-icon="phone"></span> 82476 99591</a>
+        <a href="mailto:pexxoraa@gmail.com"><span data-icon="mail"></span> pexxoraa@gmail.com</a>
+        <a href="contact.html"><span data-icon="chat"></span> Contact Us</a>
+        <a href="#"><span data-icon="pin"></span> Andhra Pradesh, India</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Ruchulu. All rights reserved.</span>
+      <span>Made for authentic Telugu flavors</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+(function(){
+  if (!AuthStore.isLoggedIn()) { window.location.href = "login.html?redirect=orders.html"; return; }
+
+  const params = new URLSearchParams(window.location.search);
+  const orderId = params.get("orderId");
+
+  function statusLabel(s){ return s.replace(/_/g, " ").replace(/\w\S*/g, t => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()); }
+
+  async function load(){
+    if(!orderId){ showError("No order specified."); return; }
+    try {
+      const json = await apiFetchJson(`/orders/${orderId}`);
+      render(json.data);
+    } catch(err){
+      showError(err.message || "This order couldn't be found.");
+    }
+  }
+
+  function showError(msg){
+    document.getElementById("confLoading").style.display = "none";
+    document.getElementById("confError").style.display = "block";
+    document.getElementById("confErrorMsg").textContent = msg;
+  }
+
+  function render(order){
+    document.getElementById("confLoading").style.display = "none";
+    document.getElementById("confContent").style.display = "block";
+    document.getElementById("confOrderNumber").textContent = order.orderNumber;
+    document.getElementById("confOrderDate").textContent = new Date(order.createdAt).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" });
+    const badge = document.getElementById("confStatusBadge");
+    badge.textContent = statusLabel(order.status);
+    badge.className = "status-badge " + order.status.toLowerCase();
+    document.getElementById("confItems").innerHTML = `<div class="order-card-items">${order.items.map(i => `${i.quantity} × ${i.productName} (${i.variantLabel})`).join("<br>")}</div>`;
+    document.getElementById("confAddressName").textContent = order.address ? `${order.address.city}, ${order.address.state}` : "—";
+    document.getElementById("confTotal").textContent = "₹" + order.totalAmount;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

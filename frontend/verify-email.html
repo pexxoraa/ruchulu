@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify Email — Ruchulu</title>
+<meta name="description" content="Verify your Ruchulu account email.">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="images/logo.png" alt="Ruchulu — Pickles & Snacks" class="site-logo">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="shop.html?category=Pickles" class="active">Pickles</a></li>
+      <li><a href="shop.html?category=Snacks" class="active">Snacks</a></li>
+      <li><a href="about.html">Our Story</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <form class="nav-search" id="navSearchForm">
+      <span data-icon="search" style="position:absolute; left:13px; color:rgba(58,42,31,0.5); display:flex;"></span>
+      <input type="search" id="navSearchInput" placeholder="Search for pickles, podis...">
+    </form>
+    <div class="nav-actions">
+      <button class="icon-btn" id="menuToggle" aria-label="Open menu"><span data-icon="menu"></span></button>
+      <span data-auth-slot></span>
+      <a class="icon-btn" href="shop.html?wishlist=1" aria-label="Wishlist"><span data-icon="heart"></span><span class="badge-count" data-wishlist-count>0</span></a>
+      <button class="cart-btn" data-open-cart><span data-icon="cart"></span> Cart <span class="badge-count" data-cart-count>0</span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="scrim" id="scrim"></div>
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu"><span data-icon="close"></span></button>
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop All</a>
+  <a href="shop.html?category=Pickles">Pickles</a>
+  <a href="shop.html?category=Snacks">Snacks</a>
+  <a href="shop.html?category=Podis">Podis</a>
+  <a href="shop.html?category=Hampers">Gift Hampers</a>
+  <a href="about.html">Our Story</a>
+  <a href="contact.html">Contact</a>
+  <a href="cart.html">View Cart</a>
+  <a href="orders.html">My Orders</a>
+</div>
+
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-head">
+    <h3>Your Cart</h3>
+    <button id="cartDrawerClose" aria-label="Close cart"><span data-icon="close"></span></button>
+  </div>
+  <div class="cart-drawer-body" id="cartDrawerBody"></div>
+  <div class="cart-drawer-foot" id="cartDrawerFoot" style="display:none">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cartDrawerSubtotal">₹0</span></div>
+    <p class="cart-note">Shipping and taxes calculated at checkout.</p>
+    <a href="cart.html" class="btn-primary btn-block">View Cart &amp; Checkout</a>
+  </div>
+</div>
+
+<div class="auth-shell">
+  <div class="auth-card" style="text-align:center;">
+    <div class="logo-mark-wrap"><img src="images/logo.png" alt="Ruchulu"></div>
+    <div id="veLoading">
+      <h1>Verifying your email...</h1>
+      <p class="auth-sub">Just a moment.</p>
+    </div>
+    <div id="veSuccess" style="display:none;">
+      <div class="confirmation-check" style="margin:0 auto 18px;"><span data-icon="check"></span></div>
+      <h1>Email verified</h1>
+      <p class="auth-sub">Your email address has been confirmed.</p>
+      <a href="index.html" class="btn-primary" style="margin-top:10px;">Continue to Ruchulu</a>
+    </div>
+    <div id="veError" style="display:none;">
+      <h1>Verification failed</h1>
+      <p class="auth-sub" id="veErrorMsg">This verification link is invalid or has expired.</p>
+      <a href="login.html" class="btn-secondary" style="margin-top:10px;">Back to Login</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="footer-logo-wrap"><img src="images/logo.png" alt="Ruchulu" class="footer-logo-img"></div>
+        </div>
+        <p>Authentic Telugu pickles, snacks, sweets and spices — homemade in small batches and shipped across India.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><span data-icon="instagram"></span></a>
+          <a href="#" aria-label="WhatsApp"><span data-icon="whatsapp"></span></a>
+          <a href="#" aria-label="Facebook"><span data-icon="facebook"></span></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Shop</h5>
+        <a href="shop.html?category=Pickles">Pickles</a>
+        <a href="shop.html?category=Snacks">Snacks</a>
+        <a href="shop.html?category=Podis">Podis</a>
+        <a href="shop.html?category=Hampers">Gift Hampers</a>
+        <a href="shop.html">All Products</a>
+      </div>
+      <div class="footer-col">
+        <h5>Account</h5>
+        <a href="orders.html">My Orders</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Create Account</a>
+        <a href="cart.html">Cart</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="tel:8247699591"><span data-icon="phone"></span> 82476 99591</a>
+        <a href="mailto:pexxoraa@gmail.com"><span data-icon="mail"></span> pexxoraa@gmail.com</a>
+        <a href="contact.html"><span data-icon="chat"></span> Contact Us</a>
+        <a href="#"><span data-icon="pin"></span> Andhra Pradesh, India</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Ruchulu. All rights reserved.</span>
+      <span>Made for authentic Telugu flavors</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get("token");
+  const email = params.get("email");
+
+  async function run(){
+    if(!token || !email){
+      show("veError");
+      document.getElementById("veErrorMsg").textContent = "This verification link is missing required information.";
+      return;
+    }
+    try {
+      await apiFetchJson(`/auth/verify-email?email=${encodeURIComponent(email)}`, {
+        method: "POST",
+        body: JSON.stringify({ token, email }),
+      });
+      show("veSuccess");
+    } catch(err){
+      show("veError");
+      document.getElementById("veErrorMsg").textContent = err.message || "This verification link is invalid or has expired.";
+    }
+  }
+
+  function show(id){
+    ["veLoading","veSuccess","veError"].forEach(x => document.getElementById(x).style.display = x === id ? "block" : "none");
+  }
+
+  run();
+})();
+</script>
+</body>
+</html>

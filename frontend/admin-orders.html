@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — Ruchulu</title>
+<meta name="description" content="Manage Ruchulu orders.">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="admin-topbar">
+  <div class="admin-topbar-brand">
+    <img src="images/logo.png" alt="Ruchulu" style="height:28px; border-radius:6px;">
+    Ruchulu <span class="admin-topbar-tag">Admin</span>
+  </div>
+  <div class="admin-topbar-right">
+    <span id="adminWhoami"></span>
+    <a href="index.html" target="_blank" rel="noopener"><span data-icon="cart"></span> View Storefront</a>
+    <button id="adminLogoutBtn"><span data-icon="logout"></span> Log Out</button>
+  </div>
+</div>
+
+<div class="admin-shell">
+
+  <div class="admin-page-head">
+    <div>
+      <h1>Orders</h1>
+      <p>Every order placed on Ruchulu, newest first. Change a status to update it instantly.</p>
+    </div>
+  </div>
+
+  <div class="admin-stats" id="adminStats">
+    <div class="admin-stat-card"><div class="admin-stat-label">Today's Orders</div><div class="admin-stat-value">—</div></div>
+    <div class="admin-stat-card"><div class="admin-stat-label">Today's Revenue</div><div class="admin-stat-value">—</div></div>
+    <div class="admin-stat-card"><div class="admin-stat-label">Pending Orders</div><div class="admin-stat-value">—</div></div>
+    <div class="admin-stat-card"><div class="admin-stat-label">Low Stock Items</div><div class="admin-stat-value">—</div></div>
+  </div>
+
+  <div class="admin-toolbar">
+    <select id="statusFilter">
+      <option value="">All statuses</option>
+      <option value="PENDING">Pending</option>
+      <option value="CONFIRMED">Confirmed</option>
+      <option value="PACKED">Packed</option>
+      <option value="SHIPPED">Shipped</option>
+      <option value="OUT_FOR_DELIVERY">Out for Delivery</option>
+      <option value="DELIVERED">Delivered</option>
+      <option value="CANCELLED">Cancelled</option>
+      <option value="RETURNED">Returned</option>
+      <option value="REFUNDED">Refunded</option>
+    </select>
+    <span class="admin-refresh-btn" id="refreshBtn"><span data-icon="refresh"></span> Refresh</span>
+    <span class="admin-stat-sub" id="resultCount" style="margin-left:auto;"></span>
+  </div>
+
+  <div id="ordersLoading" style="text-align:center; padding:60px 20px; color:rgba(58,42,31,0.5);">Loading orders...</div>
+  <div id="ordersEmpty" style="display:none;" class="cart-empty-page">
+    <span data-icon="package"></span>
+    <h3>No orders found</h3>
+    <p style="color:rgba(58,42,31,0.6); margin-top:10px;">Try a different status filter.</p>
+  </div>
+  <div id="ordersError" style="display:none;" class="cart-empty-page">
+    <span data-icon="package"></span>
+    <h3>Couldn't load orders</h3>
+    <p style="color:rgba(58,42,31,0.6); margin-top:10px;" id="ordersErrorMsg"></p>
+  </div>
+
+  <div id="ordersList"></div>
+
+  <div style="display:flex; justify-content:center; gap:12px; margin-top:24px;" id="pagination"></div>
+
+</div>
+
+<script src="script.js"></script>
+<script>
+(function(){
+  const STAFF_ROLES = ["ADMIN", "SUPER_ADMIN", "MANAGER"];
+  const STATUSES = ["PENDING","CONFIRMED","PACKED","SHIPPED","OUT_FOR_DELIVERY","DELIVERED","CANCELLED","RETURNED","REFUNDED"];
+
+  if (!AuthStore.isLoggedIn() || !STAFF_ROLES.includes(AuthStore.getUser()?.role)) {
+    window.location.href = "admin-login.html";
+    return;
+  }
+
+  const user = AuthStore.getUser();
+  document.getElementById("adminWhoami").textContent = `Signed in as ${user.fullName}`;
+
+  document.getElementById("adminLogoutBtn").addEventListener("click", async () => {
+    try { await apiFetch("/auth/logout", { method: "POST" }); } catch(e){}
+    AuthStore.clear();
+    window.location.href = "admin-login.html";
+  });
+
+  function statusLabel(s){ return s.replace(/_/g, " ").replace(/\w\S*/g, t => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()); }
+  function money(n){ return "₹" + Number(n).toLocaleString("en-IN", { maximumFractionDigits: 0 }); }
+
+  let currentPage = 1;
+
+  async function loadStats(){
+    try {
+      const json = await apiFetchJson("/admin/dashboard/summary");
+      const s = json.data;
+      const cards = document.querySelectorAll("#adminStats .admin-stat-value");
+      cards[0].textContent = s.todayOrders;
+      cards[1].textContent = money(s.todayRevenue);
+      cards[2].textContent = s.pendingOrders;
+      cards[3].textContent = s.lowStockCount;
+    } catch(err){
+      // Non-fatal — the order list below is the important part.
+      console.warn("Couldn't load dashboard stats:", err.message);
+    }
+  }
+
+  async function updateOrderStatus(orderId, payload, rowEl){
+    const savingEl = rowEl.querySelector(".admin-status-saving");
+    const selectEl = rowEl.querySelector(".admin-status-select");
+    savingEl.classList.add("show");
+    selectEl.disabled = true;
+    try {
+      const json = await apiFetchJson(`/orders/${orderId}/status`, {
+        method: "PATCH",
+        body: JSON.stringify(payload),
+      });
+      const badge = rowEl.querySelector(".status-badge");
+      badge.textContent = statusLabel(json.data.status);
+      badge.className = "status-badge " + json.data.status.toLowerCase();
+      showToast(`Order marked as ${statusLabel(json.data.status)}`);
+    } catch(err){
+      if(err.status === 403){
+        // A 403 here means the backend's fresh lookup says this session's
+        // account isn't staff — but the page only got this far because it
+        // was, moments ago. The most common cause is a stale/cross-session
+        // token (e.g. a customer session's cookie clobbering the admin
+        // session's in another tab). Re-check the real current session
+        // rather than leaving a confusing dead-end error on screen.
+        try {
+          const me = await apiFetchJson("/auth/me");
+          if(!STAFF_ROLES.includes(me.data.role)){
+            AuthStore.clear();
+            showToast("Your session changed to a non-admin account — please log in again.");
+            setTimeout(() => { window.location.href = "admin-login.html"; }, 1200);
+            return;
+          }
+          // Session genuinely still shows staff — surface the original error as-is.
+          showToast(err.message || "Couldn't update order status");
+        } catch(meErr){
+          AuthStore.clear();
+          showToast("Your session has expired — please log in again.");
+          setTimeout(() => { window.location.href = "admin-login.html"; }, 1200);
+          return;
+        }
+      } else {
+        showToast(err.message || "Couldn't update order status");
+      }
+      selectEl.value = rowEl.dataset.currentStatus; // revert the dropdown on failure
+    } finally {
+      savingEl.classList.remove("show");
+      selectEl.disabled = false;
+    }
+  }
+
+  function orderRowHTML(order){
+    const itemsSummary = order.items.map(i => `${i.quantity} × ${i.productName} (${i.variantLabel})`).join(", ");
+    return `
+      <div class="admin-order-row" data-order-id="${order.id}" data-current-status="${order.status}">
+        <div class="admin-order-top">
+          <div>
+            <div class="admin-order-id">${order.orderNumber}</div>
+            <div class="admin-order-customer">${order.user?.fullName || "—"} · ${order.user?.email || "—"}${order.user?.phone ? " · " + order.user.phone : ""}</div>
+            <div class="admin-order-date">${new Date(order.createdAt).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</div>
+          </div>
+          <span class="status-badge ${order.status.toLowerCase()}">${statusLabel(order.status)}</span>
+        </div>
+        <div class="admin-order-items">${itemsSummary}</div>
+        <div class="admin-order-bottom">
+          <span class="admin-order-total">${money(order.totalAmount)}</span>
+          <div class="admin-status-control">
+            <select class="admin-status-select">
+              ${STATUSES.map(s => `<option value="${s}" ${s===order.status?'selected':''}>${statusLabel(s)}</option>`).join("")}
+            </select>
+            <span class="admin-status-saving"><span data-icon="refresh"></span> Saving...</span>
+          </div>
+        </div>
+        <div class="admin-tracking-fields">
+          <input type="text" placeholder="Tracking number" class="tracking-number-input">
+          <input type="text" placeholder="Courier name" class="courier-name-input">
+          <button type="button" class="save-tracking-btn">Save Tracking Info</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function wireOrderRow(rowEl){
+    const orderId = rowEl.dataset.orderId;
+    const select = rowEl.querySelector(".admin-status-select");
+    const trackingFields = rowEl.querySelector(".admin-tracking-fields");
+
+    select.addEventListener("change", () => {
+      const newStatus = select.value;
+      updateOrderStatus(orderId, { status: newStatus }, rowEl);
+      rowEl.dataset.currentStatus = newStatus;
+      trackingFields.classList.toggle("show", newStatus === "SHIPPED" || newStatus === "OUT_FOR_DELIVERY");
+    });
+
+    rowEl.querySelector(".save-tracking-btn").addEventListener("click", () => {
+      updateOrderStatus(orderId, {
+        status: select.value,
+        trackingNumber: rowEl.querySelector(".tracking-number-input").value.trim(),
+        courierName: rowEl.querySelector(".courier-name-input").value.trim(),
+      }, rowEl);
+    });
+  }
+
+  function renderPagination(meta){
+    const el = document.getElementById("pagination");
+    if(!meta || meta.totalPages <= 1){ el.innerHTML = ""; return; }
+    el.innerHTML = `
+      <button class="btn-secondary" id="prevPageBtn" ${!meta.hasPrevPage ? "disabled" : ""}>← Previous</button>
+      <span style="align-self:center; font-size:13px; color:rgba(58,42,31,0.6);">Page ${meta.page} of ${meta.totalPages}</span>
+      <button class="btn-secondary" id="nextPageBtn" ${!meta.hasNextPage ? "disabled" : ""}>Next →</button>
+    `;
+    document.getElementById("prevPageBtn")?.addEventListener("click", () => { if(meta.hasPrevPage){ currentPage--; loadOrders(); } });
+    document.getElementById("nextPageBtn")?.addEventListener("click", () => { if(meta.hasNextPage){ currentPage++; loadOrders(); } });
+  }
+
+  async function loadOrders(){
+    const loading = document.getElementById("ordersLoading");
+    const empty = document.getElementById("ordersEmpty");
+    const errorEl = document.getElementById("ordersError");
+    const list = document.getElementById("ordersList");
+
+    loading.style.display = "block";
+    empty.style.display = "none";
+    errorEl.style.display = "none";
+    list.innerHTML = "";
+
+    const status = document.getElementById("statusFilter").value;
+    const qs = new URLSearchParams({ page: currentPage, limit: 15, ...(status ? { status } : {}) });
+
+    try {
+      const json = await apiFetchJson(`/orders/admin/all?${qs.toString()}`);
+      loading.style.display = "none";
+      document.getElementById("resultCount").textContent = json.meta ? `${json.meta.total} order(s)` : "";
+
+      if(!json.data || json.data.length === 0){
+        empty.style.display = "block";
+        renderPagination(null);
+        return;
+      }
+
+      list.innerHTML = json.data.map(orderRowHTML).join("");
+      list.querySelectorAll(".admin-order-row").forEach(wireOrderRow);
+      renderPagination(json.meta);
+    } catch(err){
+      loading.style.display = "none";
+      errorEl.style.display = "block";
+      document.getElementById("ordersErrorMsg").textContent = err.message || "Please try again.";
+    }
+  }
+
+  document.getElementById("statusFilter").addEventListener("change", () => { currentPage = 1; loadOrders(); });
+  document.getElementById("refreshBtn").addEventListener("click", () => { loadOrders(); loadStats(); });
+
+  loadStats();
+  loadOrders();
+})();
+</script>
+</body>
+</html>

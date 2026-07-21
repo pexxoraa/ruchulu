@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Story — Ruchulu</title>
+<meta name="description" content="The story behind Ruchulu — a collective of home cooks preserving authentic Andhra & Telangana recipes.">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="images/logo.png" alt="Ruchulu — Pickles & Snacks" class="site-logo">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="shop.html?category=Pickles">Pickles</a></li>
+      <li><a href="shop.html?category=Snacks">Snacks</a></li>
+      <li><a href="about.html" class="active">Our Story</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <form class="nav-search" id="navSearchForm">
+      <span data-icon="search" style="position:absolute; left:13px; color:rgba(58,42,31,0.5); display:flex;"></span>
+      <input type="search" id="navSearchInput" placeholder="Search for pickles, podis...">
+    </form>
+    <div class="nav-actions">
+      <button class="icon-btn" id="menuToggle" aria-label="Open menu"><span data-icon="menu"></span></button>
+      <span data-auth-slot></span>
+      <a class="icon-btn" href="shop.html?wishlist=1" aria-label="Wishlist"><span data-icon="heart"></span><span class="badge-count" data-wishlist-count>0</span></a>
+      <button class="cart-btn" data-open-cart><span data-icon="cart"></span> Cart <span class="badge-count" data-cart-count>0</span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="scrim" id="scrim"></div>
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu"><span data-icon="close"></span></button>
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop All</a>
+  <a href="shop.html?category=Pickles">Pickles</a>
+  <a href="shop.html?category=Snacks">Snacks</a>
+  <a href="shop.html?category=Podis">Podis</a>
+  <a href="shop.html?category=Hampers">Gift Hampers</a>
+  <a href="about.html">Our Story</a>
+  <a href="contact.html">Contact</a>
+  <a href="cart.html">View Cart</a>
+  <a href="orders.html">My Orders</a>
+</div>
+
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-head">
+    <h3>Your Cart</h3>
+    <button id="cartDrawerClose" aria-label="Close cart"><span data-icon="close"></span></button>
+  </div>
+  <div class="cart-drawer-body" id="cartDrawerBody"></div>
+  <div class="cart-drawer-foot" id="cartDrawerFoot" style="display:none">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cartDrawerSubtotal">₹0</span></div>
+    <p class="cart-note">Shipping and taxes calculated at checkout.</p>
+    <a href="cart.html" class="btn-primary btn-block">View Cart &amp; Checkout</a>
+  </div>
+</div>
+
+<div class="page-header">
+  <div class="eyebrow" style="justify-content:center">Our Story</div>
+  <h1>Every jar starts in someone's kitchen.</h1>
+  <div class="breadcrumb"><a href="index.html">Home</a> / <span>Our Story</span></div>
+</div>
+
+<section class="section">
+  <div class="content-block">
+    <p>Ruchulu began with one recipe: a grandmother's avakaya, made every mango season in Vijayawada and shared with anyone who dropped by. Neighbours started asking for jars of their own. Then their children, living in Hyderabad and Bengaluru and further afield, started asking too.</p>
+    <p>What we built is not a factory. It's a small collective of home cooks across Andhra Pradesh and Telangana, each one responsible for the recipes they know best — a family's pickle, a grandmother's podi, a household's festival snack. We package what they make, exactly as they make it, and get it to your door before it loses that just-made freshness.</p>
+    <div class="story-quote">"We don't sell pickle. We send home a little bit of Andhra."</div>
+    <p>No preservatives, no shortcuts, no centralised kitchen smoothing out the differences that make each recipe someone's own. If a jar tastes slightly different from batch to batch, that's not inconsistency — that's the cook, and the season's mangoes, doing what they always do.</p>
+  </div>
+
+  <div class="wrap" style="margin-top:56px;">
+    <img src="images/packages-full.jpg" alt="The full Ruchulu range of pickles, podi and snacks" style="width:100%; border-radius:24px; box-shadow:var(--shadow-lg);">
+  </div>
+
+  <div class="stat-strip">
+    <div class="trust-item"><span class="trust-num">30+</span><span class="trust-label">Years of recipes</span></div>
+    <div class="trust-item"><span class="trust-num">40+</span><span class="trust-label">Partner home kitchens</span></div>
+    <div class="trust-item"><span class="trust-num">18k+</span><span class="trust-label">Homes served</span></div>
+    <div class="trust-item"><span class="trust-num">120+</span><span class="trust-label">Recipes preserved</span></div>
+  </div>
+</section>
+
+<section class="section why" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="eyebrow">What We Stand For</div><h2>Quality you can trace back to a kitchen</h2></div>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-icon"><span data-icon="chef"></span></div>
+        <h4>Homemade, not factory-made</h4>
+        <p>Every recipe belongs to the cook who makes it — we don't standardise away what makes it theirs.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"><span data-icon="shield"></span></div>
+        <h4>Quality checked, always</h4>
+        <p>Every batch is tasted and checked before it's packed, by someone who grew up eating the same dish.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"><span data-icon="farm"></span></div>
+        <h4>Farmers we know by name</h4>
+        <p>Mangoes, chillies, and lentils sourced directly from growers across Andhra and Telangana.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"><span data-icon="truck"></span></div>
+        <h4>Packed for the journey</h4>
+        <p>Spill-proof, temperature-safe packaging so what arrives tastes like what left the kitchen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!--
+<section class="section" style="padding-top:0;">
+  <div class="newsletter">
+    <h2>Get first access to festival hampers</h2>
+    <p>Seasonal drops, restock alerts, and recipes from the kitchens we work with — no spam, just pickle news.</p>
+    <form class="newsletter-form">
+      <input type="email" placeholder="you@example.com" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+-->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="footer-logo-wrap"><img src="images/logo.png" alt="Ruchulu" class="footer-logo-img"></div>
+        </div>
+        <p>Authentic Telugu pickles, snacks, sweets and spices — homemade in small batches and shipped across India.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><span data-icon="instagram"></span></a>
+          <a href="#" aria-label="WhatsApp"><span data-icon="whatsapp"></span></a>
+          <a href="#" aria-label="Facebook"><span data-icon="facebook"></span></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Shop</h5>
+        <a href="shop.html?category=Pickles">Pickles</a>
+        <a href="shop.html?category=Snacks">Snacks</a>
+        <a href="shop.html?category=Podis">Podis</a>
+        <a href="shop.html?category=Hampers">Gift Hampers</a>
+        <a href="shop.html">All Products</a>
+      </div>
+      <div class="footer-col">
+        <h5>Account</h5>
+        <a href="orders.html">My Orders</a>
+        <a href="login.html" data-guest-only>Login</a>
+        <a href="register.html" data-guest-only>Create Account</a>
+        <a href="cart.html">Cart</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="shipping-policy.html">Shipping Policy</a>
+        <a href="refund-policy.html">Refund Policy</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="tel:8247699591"><span data-icon="phone"></span> 82476 99591</a>
+        <a href="mailto:pexxoraa@gmail.com"><span data-icon="mail"></span> pexxoraa@gmail.com</a>
+        <a href="contact.html"><span data-icon="chat"></span> Contact Us</a>
+        <a href="#"><span data-icon="pin"></span> Andhra Pradesh, India</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Ruchulu. All rights reserved.</span>
+      <span>Made for authentic Telugu flavors</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

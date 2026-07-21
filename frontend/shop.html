@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop All Products — Ruchulu</title>
+<meta name="description" content="Shop the full Ruchulu range of authentic Andhra & Telangana pickles, snacks, podi and gift hampers.">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="images/logo.png" alt="Ruchulu — Pickles & Snacks" class="site-logo">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html" class="active">Shop</a></li>
+      <li><a href="shop.html?category=Pickles">Pickles</a></li>
+      <li><a href="shop.html?category=Snacks">Snacks</a></li>
+      <li><a href="about.html">Our Story</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <form class="nav-search" id="navSearchForm">
+      <span data-icon="search" style="position:absolute; left:13px; color:rgba(58,42,31,0.5); display:flex;"></span>
+      <input type="search" id="navSearchInput" placeholder="Search for pickles, podis...">
+    </form>
+    <div class="nav-actions">
+      <button class="icon-btn" id="menuToggle" aria-label="Open menu"><span data-icon="menu"></span></button>
+      <span data-auth-slot></span>
+      <a class="icon-btn" href="#" aria-label="Wishlist"><span data-icon="heart"></span><span class="badge-count" data-wishlist-count>0</span></a>
+      <button class="cart-btn" data-open-cart><span data-icon="cart"></span> Cart <span class="badge-count" data-cart-count>0</span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="scrim" id="scrim"></div>
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu"><span data-icon="close"></span></button>
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop All</a>
+  <a href="shop.html?category=Pickles">Pickles</a>
+  <a href="shop.html?category=Snacks">Snacks</a>
+  <a href="shop.html?category=Podis">Podis</a>
+  <a href="shop.html?category=Hampers">Gift Hampers</a>
+  <a href="about.html">Our Story</a>
+  <a href="contact.html">Contact</a>
+  <a href="cart.html">View Cart</a>
+  <a href="orders.html">My Orders</a>
+</div>
+
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-head">
+    <h3>Your Cart</h3>
+    <button id="cartDrawerClose" aria-label="Close cart"><span data-icon="close"></span></button>
+  </div>
+  <div class="cart-drawer-body" id="cartDrawerBody"></div>
+  <div class="cart-drawer-foot" id="cartDrawerFoot" style="display:none">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cartDrawerSubtotal">₹0</span></div>
+    <p class="cart-note">Shipping and taxes calculated at checkout.</p>
+    <a href="cart.html" class="btn-primary btn-block">View Cart &amp; Checkout</a>
+  </div>
+</div>
+
+<div class="page-header">
+  <div class="eyebrow" style="justify-content:center">Shop</div>
+  <h1 id="pageTitle">All Products</h1>
+  <div class="breadcrumb"><a href="index.html">Home</a> / <span id="breadcrumbCurrent">Shop</span></div>
+</div>
+
+<section class="section" style="padding-top:48px;">
+  <div class="wrap">
+    <div class="shop-layout">
+
+      <aside class="filters">
+        <div class="filter-group">
+          <h5>Category</h5>
+          <label class="filter-row"><input type="checkbox" value="Pickles" class="f-category"> Pickles</label>
+          <label class="filter-row"><input type="checkbox" value="Snacks" class="f-category"> Snacks</label>
+          <label class="filter-row"><input type="checkbox" value="Podis" class="f-category"> Podis</label>
+          <label class="filter-row"><input type="checkbox" value="Hampers" class="f-category"> Gift Hampers</label>
+        </div>
+        <div class="filter-group">
+          <h5>Diet</h5>
+          <label class="filter-row"><input type="radio" name="diet" value="" class="f-diet" checked> All</label>
+          <label class="filter-row"><input type="radio" name="diet" value="Veg" class="f-diet"> Vegetarian</label>
+          <label class="filter-row"><input type="radio" name="diet" value="Non-Veg" class="f-diet"> Non-Vegetarian</label>
+        </div>
+        <div class="filter-group">
+          <h5>Max Price — <span id="priceLabel">₹900+</span></h5>
+          <input type="range" min="99" max="900" value="900" class="price-range" id="priceRange">
+          <div class="price-range-label"><span>₹99</span><span>₹900+</span></div>
+        </div>
+        <div class="filter-group">
+          <label class="filter-row"><input type="checkbox" id="f-bestseller"> Best Sellers only</label>
+          <a class="clear-filters" id="clearFilters">Clear all filters</a>
+        </div>
+      </aside>
+
+      <div class="shop-main">
+        <div class="toolbar">
+          <div class="result-count" id="resultCount">16 products</div>
+          <select class="sort-select" id="sortSelect">
+            <option value="featured">Sort: Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Highest Rated</option>
+          </select>
+        </div>
+        <div class="product-grid" id="shopGrid"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!--
+<section class="section" style="padding-top:0;">
+  <div class="newsletter">
+    <h2>Get first access to festival hampers</h2>
+    <p>Seasonal drops, restock alerts, and recipes from the kitchens we work with — no spam, just pickle news.</p>
+    <form class="newsletter-form">
+      <input type="email" placeholder="you@example.com" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+-->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="footer-logo-wrap"><img src="images/logo.png" alt="Ruchulu" class="footer-logo-img"></div>
+        </div>
+        <p>Authentic Telugu pickles, snacks, sweets and spices — homemade in small batches and shipped across India.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><span data-icon="instagram"></span></a>
+          <a href="#" aria-label="WhatsApp"><span data-icon="whatsapp"></span></a>
+          <a href="#" aria-label="Facebook"><span data-icon="facebook"></span></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Shop</h5>
+        <a href="shop.html?category=Pickles">Pickles</a>
+        <a href="shop.html?category=Snacks">Snacks</a>
+        <a href="shop.html?category=Podis">Podis</a>
+        <a href="shop.html?category=Hampers">Gift Hampers</a>
+        <a href="shop.html">All Products</a>
+      </div>
+      <div class="footer-col">
+        <h5>Account</h5>
+        <a href="orders.html">My Orders</a>
+        <a href="login.html" data-guest-only>Login</a>
+        <a href="register.html" data-guest-only>Create Account</a>
+        <a href="cart.html">Cart</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="shipping-policy.html">Shipping Policy</a>
+        <a href="refund-policy.html">Refund Policy</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="tel:8247699591"><span data-icon="phone"></span> 82476 99591</a>
+        <a href="mailto:pexxoraa@gmail.com"><span data-icon="mail"></span> pexxoraa@gmail.com</a>
+        <a href="contact.html"><span data-icon="chat"></span> Contact Us</a>
+        <a href="#"><span data-icon="pin"></span> Andhra Pradesh, India</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Ruchulu. All rights reserved.</span>
+      <span>Made for authentic Telugu flavors</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const initialCategory = params.get("category");
+  const initialQuery = (params.get("q") || "").toLowerCase();
+  const wishlistOnly = params.get("wishlist") === "1";
+
+  if(initialCategory){
+    document.getElementById("pageTitle").textContent = initialCategory;
+    document.getElementById("breadcrumbCurrent").textContent = initialCategory;
+    const cb = document.querySelector(`.f-category[value="${initialCategory}"]`);
+    if(cb) cb.checked = true;
+  }
+  if(wishlistOnly){
+    document.getElementById("pageTitle").textContent = "Your Wishlist";
+    document.getElementById("breadcrumbCurrent").textContent = "Wishlist";
+  }
+  if(initialQuery){
+    document.getElementById("pageTitle").textContent = `Results for "${params.get("q")}"`;
+    document.getElementById("breadcrumbCurrent").textContent = "Search";
+  }
+
+  const grid = document.getElementById("shopGrid");
+  const resultCount = document.getElementById("resultCount");
+  const priceRange = document.getElementById("priceRange");
+  const priceLabel = document.getElementById("priceLabel");
+
+  function currentFilters(){
+    const categories = Array.from(document.querySelectorAll(".f-category:checked")).map(el => el.value);
+    const diet = document.querySelector(".f-diet:checked").value;
+    const maxPrice = Number(priceRange.value);
+    const bestsellerOnly = document.getElementById("f-bestseller").checked;
+    return { categories, diet, maxPrice, bestsellerOnly };
+  }
+
+  function applyFilters(){
+    const { categories, diet, maxPrice, bestsellerOnly } = currentFilters();
+    let items = PRODUCTS.filter(p=>{
+      if(categories.length && !categories.includes(p.category)) return false;
+      if(diet && p.type !== diet) return false;
+      if(p.price > maxPrice) return false;
+      if(bestsellerOnly && p.tag !== "Best Seller") return false;
+      if(initialQuery && !(p.name.toLowerCase().includes(initialQuery) || p.category.toLowerCase().includes(initialQuery))) return false;
+      if(wishlistOnly && !isWishlisted(p.id)) return false;
+      return true;
+    });
+
+    const sort = document.getElementById("sortSelect").value;
+    if(sort === "price-asc") items.sort((a,b)=>a.price-b.price);
+    if(sort === "price-desc") items.sort((a,b)=>b.price-a.price);
+    if(sort === "rating") items.sort((a,b)=>b.rating-a.rating);
+
+    resultCount.textContent = `${items.length} product${items.length===1?"":"s"}`;
+    grid.innerHTML = items.length
+      ? items.map(productCardHTML).join("")
+      : `<div class="no-results">${icon("search")}<div>No products match these filters. Try clearing a few.</div></div>`;
+    refreshBadges();
+  }
+
+  document.querySelectorAll(".f-category, .f-diet").forEach(el => el.addEventListener("change", applyFilters));
+  document.getElementById("f-bestseller").addEventListener("change", applyFilters);
+  document.getElementById("sortSelect").addEventListener("change", applyFilters);
+  priceRange.addEventListener("input", ()=>{ priceLabel.textContent = "₹" + priceRange.value + (priceRange.value==="900"?"+":""); applyFilters(); });
+  document.getElementById("clearFilters").addEventListener("click", ()=>{
+    document.querySelectorAll(".f-category").forEach(el=>el.checked=false);
+    document.querySelector('.f-diet[value=""]').checked = true;
+    document.getElementById("f-bestseller").checked = false;
+    priceRange.value = 900; priceLabel.textContent = "₹900+";
+    window.history.replaceState({}, "", "shop.html");
+    applyFilters();
+  });
+
+  applyFilters();
+  syncCatalogWithBackend().then((usedApi) => { if (usedApi) applyFilters(); });
+})();
+</script>
+</body>
+</html>

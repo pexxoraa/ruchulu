@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruchulu — Authentic Andhra & Telangana Pickles &amp; Snacks</title>
+<meta name="description" content="Ruchulu — authentic homemade pickles, podi and snacks from Andhra & Telangana. Avakaya, Gongura, Karam Podi, Chekkalu and more, made small-batch and shipped pan-India.">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="images/logo.png" alt="Ruchulu — Pickles & Snacks" class="site-logo">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="shop.html?category=Pickles">Pickles</a></li>
+      <li><a href="shop.html?category=Snacks">Snacks</a></li>
+      <li><a href="about.html">Our Story</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <form class="nav-search" id="navSearchForm">
+      <span data-icon="search" style="position:absolute; left:13px; color:rgba(58,42,31,0.5); display:flex;"></span>
+      <input type="search" id="navSearchInput" placeholder="Search for pickles, podis...">
+    </form>
+    <div class="nav-actions">
+      <button class="icon-btn" id="menuToggle" aria-label="Open menu"><span data-icon="menu"></span></button>
+      <span data-auth-slot></span>
+      <a class="icon-btn" href="shop.html?wishlist=1" aria-label="Wishlist"><span data-icon="heart"></span><span class="badge-count" data-wishlist-count>0</span></a>
+      <button class="cart-btn" data-open-cart><span data-icon="cart"></span> Cart <span class="badge-count" data-cart-count>0</span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="scrim" id="scrim"></div>
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu"><span data-icon="close"></span></button>
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop All</a>
+  <a href="shop.html?category=Pickles">Pickles</a>
+  <a href="shop.html?category=Snacks">Snacks</a>
+  <a href="shop.html?category=Podis">Podis</a>
+  <a href="shop.html?category=Hampers">Gift Hampers</a>
+  <a href="about.html">Our Story</a>
+  <a href="contact.html">Contact</a>
+  <a href="cart.html">View Cart</a>
+  <a href="orders.html">My Orders</a>
+</div>
+
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-head">
+    <h3>Your Cart</h3>
+    <button id="cartDrawerClose" aria-label="Close cart"><span data-icon="close"></span></button>
+  </div>
+  <div class="cart-drawer-body" id="cartDrawerBody"></div>
+  <div class="cart-drawer-foot" id="cartDrawerFoot" style="display:none">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cartDrawerSubtotal">₹0</span></div>
+    <p class="cart-note">Shipping and taxes calculated at checkout.</p>
+    <a href="cart.html" class="btn-primary btn-block">View Cart &amp; Checkout</a>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-badge"><span class="dot"></span> Homemade in small batches, every week</div>
+      <h1>Ruchulu — the tastes<br><span class="script">of home, jarred.</span></h1>
+      <p class="hero-sub">Authentic pickles, podi &amp; snacks made the way <b>ammamma</b> made them <span class="dot-sep">•</span> Sun-dried mangoes <span class="dot-sep">•</span> Stone-ground spices <span class="dot-sep">•</span> Zero preservatives</p>
+      <div class="hero-ctas">
+        <a href="shop.html" class="btn-primary">Shop Now <span data-icon="arrow"></span></a>
+        <a href="#categories" class="btn-secondary">Explore Categories</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item"><span class="trust-num">120+</span><span class="trust-label">Recipes preserved</span></div>
+        <div class="trust-item"><span class="trust-num">18k+</span><span class="trust-label">Homes served</span></div>
+        <div class="trust-item"><span class="trust-num">4.9★</span><span class="trust-label">Average rating</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="thali">
+        <div class="leaf-center"><span>Served fresh, straight from the family kitchen</span></div>
+        <div class="bowl-wrap b1"><div class="bowl"><img src="images/avakaya.jpg" alt="Avakaya Mango Pickle"></div><span class="bowl-label">Avakaya</span></div>
+        <div class="bowl-wrap b2"><div class="bowl"><img src="images/karampodi.jpg" alt="Karam Podi"></div><span class="bowl-label">Karam Podi</span></div>
+        <div class="bowl-wrap b3"><div class="bowl"><img src="images/chekkalu.jpg" alt="Chekkalu"></div><span class="bowl-label">Chekkalu</span></div>
+        <div class="bowl-wrap b4"><div class="bowl"><img src="images/gongura.jpg" alt="Gongura Pickle"></div><span class="bowl-label">Gongura</span></div>
+        <div class="bowl-wrap b5"><div class="bowl"><img src="images/murukulu.jpg" alt="Murukulu"></div><span class="bowl-label">Murukulu</span></div>
+      </div>
+      <div class="float-tag t1">
+        <div class="ft-title">Today's Special</div>
+        <div class="ft-sub">Gongura Pachadi — 18% off</div>
+      </div>
+      <div class="float-tag t2">
+        <span class="stars">★★★★★</span>
+        <div style="font-size:11px; font-weight:700;">2,400+ reviews</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <div class="marquee-item">No Preservatives <span class="sep">✦</span></div>
+    <div class="marquee-item">Cold-Pressed Sesame Oil <span class="sep">✦</span></div>
+    <div class="marquee-item">Stone-Ground Masalas <span class="sep">✦</span></div>
+    <div class="marquee-item">Pan-India Delivery <span class="sep">✦</span></div>
+    <div class="marquee-item">Made by Home Cooks <span class="sep">✦</span></div>
+    <div class="marquee-item">FSSAI Certified <span class="sep">✦</span></div>
+    <div class="marquee-item">No Preservatives <span class="sep">✦</span></div>
+    <div class="marquee-item">Cold-Pressed Sesame Oil <span class="sep">✦</span></div>
+    <div class="marquee-item">Stone-Ground Masalas <span class="sep">✦</span></div>
+    <div class="marquee-item">Pan-India Delivery <span class="sep">✦</span></div>
+    <div class="marquee-item">Made by Home Cooks <span class="sep">✦</span></div>
+    <div class="marquee-item">FSSAI Certified <span class="sep">✦</span></div>
+  </div>
+</div>
+
+<section class="section leaf-section" id="categories">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">The Full Spread</div>
+        <h2>Everything served, the way it's meant to be</h2>
+        <p>A traditional Andhra meal isn't a list — it's a plate. Click a bowl to explore.</p>
+      </div>
+      <a href="shop.html" class="section-cta">View all categories <span data-icon="arrow"></span></a>
+    </div>
+
+    <div class="plate-layout">
+      <div class="banana-leaf">
+        <div class="leaf-title">
+          <div class="eyebrow">Ruchulu</div>
+          <h3>a plate arranged the traditional way</h3>
+        </div>
+
+        <a class="category-node n1" href="shop.html?category=Pickles">
+          <div class="node-bowl"><span data-icon="jar"></span></div>
+          <div class="node-label">Pickles</div>
+          <div class="node-sub">Veg &amp; Non-Veg</div>
+        </a>
+        <a class="category-node n2" href="shop.html?category=Snacks">
+          <div class="node-bowl"><span data-icon="knot"></span></div>
+          <div class="node-label">Snacks</div>
+          <div class="node-sub">Murukulu, Chekkalu</div>
+        </a>
+        <a class="category-node n4" href="shop.html?category=Podis">
+          <div class="node-bowl"><span data-icon="bowlSwirl"></span></div>
+          <div class="node-label">Podis</div>
+          <div class="node-sub">Karam Podi</div>
+        </a>
+        <a class="category-node n6" href="shop.html?category=Hampers">
+          <div class="node-bowl"><span data-icon="gift"></span></div>
+          <div class="node-label">Gift Hampers</div>
+          <div class="node-sub">The Traditional Box</div>
+        </a>
+      </div>
+    </div>
+    <p class="plate-caption">Every bowl is its own aisle — click through to shop the category.</p>
+  </div>
+</section>
+
+<section class="section" id="products">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Best Sellers</div>
+        <h2>What everyone reorders</h2>
+      </div>
+      <a href="shop.html" class="section-cta">See all products <span data-icon="arrow"></span></a>
+    </div>
+    <div class="product-grid" id="featuredGrid"></div>
+  </div>
+</section>
+
+<section class="section why">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Why Choose Us</div>
+        <h2>Trust, in every jar</h2>
+      </div>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-icon"><span data-icon="chef"></span></div>
+        <h4>Homemade, not factory-made</h4>
+        <p>Every batch is prepared by home cooks in small quantities — the same way it's done in an Andhra kitchen.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"><span data-icon="leaf"></span></div>
+        <h4>No preservatives, ever</h4>
+        <p>Traditional oil-and-spice preservation only. Nothing artificial goes into any jar.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"><span data-icon="truck"></span></div>
+        <h4>Fresh, fast delivery</h4>
+        <p>Packed to preserve freshness and shipped across India in temperature-safe packaging.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"><span data-icon="farm"></span></div>
+        <h4>Farm-to-home sourcing</h4>
+        <p>Mangoes, chillies and spices sourced directly from farmers across Andhra &amp; Telangana.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section story" id="story">
+  <div class="story-visual">
+    <div class="story-frame" style="background-image:url('images/avakaya.jpg'); background-size:cover; background-position:center;">
+      <div class="story-badge">
+        <span class="trust-num">30+ yrs</span>
+        <span class="trust-label" style="color:var(--brown)">Of family recipes</span>
+      </div>
+    </div>
+  </div>
+  <div class="story-text">
+    <div class="eyebrow">Our Story</div>
+    <h2>It started with one jar of avakaya, at ammamma's kitchen table.</h2>
+    <p>What began as a grandmother sharing her mango pickle with neighbours has grown into a small collective of home cooks across Andhra Pradesh and Telangana — each one preserving a recipe passed down through their own family.</p>
+    <p>We don't run a factory. We run a network of kitchens, each responsible for the dishes they know best, so that every jar tastes like it came from someone's home — because it did.</p>
+    <div class="story-quote">"We don't sell pickle. We send home a little bit of Andhra."</div>
+    <a href="about.html" class="btn-secondary">Read our full story</a>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Customer Reviews</div>
+        <h2>Loved across the country</h2>
+      </div>
+    </div>
+    <div class="testi-strip">
+      <div class="testi-card">
+        <span class="stars">★★★★★</span>
+        <p>"Tastes exactly like my grandmother's avakaya. I've tried a dozen brands online — this is the first one that got the oil-to-mango ratio right."</p>
+        <div class="testi-person">
+          <div class="testi-avatar" style="background:var(--maroon)">R</div>
+          <div><div class="testi-name">Ramya K.</div><div class="testi-loc">Hyderabad</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <span class="stars">★★★★★</span>
+        <p>"Ordered the gongura pachadi and karam podi combo — both arrived well-packed and fresh. My mother, who's very particular about pickles, approved."</p>
+        <div class="testi-person">
+          <div class="testi-avatar" style="background:var(--mango)">S</div>
+          <div><div class="testi-name">Sandeep V.</div><div class="testi-loc">Bengaluru</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <span class="stars">★★★★★</span>
+        <p>"Living abroad, this is the closest I've come to home. The chekkalu are as crisp as the ones from my aunt's kitchen in Vijayawada."</p>
+        <div class="testi-person">
+          <div class="testi-avatar" style="background:var(--leaf-deep)">P</div>
+          <div><div class="testi-name">Priya N.</div><div class="testi-loc">via NRI Delivery</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--
+<section class="section" style="padding-top:0;">
+  <div class="newsletter">
+    <h2>Get first access to festival hampers</h2>
+    <p>Seasonal drops, restock alerts, and recipes from the kitchens we work with — no spam, just pickle news.</p>
+    <form class="newsletter-form">
+      <input type="email" placeholder="you@example.com" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+-->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="footer-logo-wrap"><img src="images/logo.png" alt="Ruchulu" class="footer-logo-img"></div>
+        </div>
+        <p>Authentic Telugu pickles, snacks, sweets and spices — homemade in small batches and shipped across India.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><span data-icon="instagram"></span></a>
+          <a href="#" aria-label="WhatsApp"><span data-icon="whatsapp"></span></a>
+          <a href="#" aria-label="Facebook"><span data-icon="facebook"></span></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Shop</h5>
+        <a href="shop.html?category=Pickles">Pickles</a>
+        <a href="shop.html?category=Snacks">Snacks</a>
+        <a href="shop.html?category=Podis">Podis</a>
+        <a href="shop.html?category=Hampers">Gift Hampers</a>
+        <a href="shop.html">All Products</a>
+      </div>
+      <div class="footer-col">
+        <h5>Account</h5>
+        <a href="orders.html">My Orders</a>
+        <a href="login.html" data-guest-only>Login</a>
+        <a href="register.html" data-guest-only>Create Account</a>
+        <a href="cart.html">Cart</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="shipping-policy.html">Shipping Policy</a>
+        <a href="refund-policy.html">Refund Policy</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="tel:8247699591"><span data-icon="phone"></span> 82476 99591</a>
+        <a href="mailto:pexxoraa@gmail.com"><span data-icon="mail"></span> pexxoraa@gmail.com</a>
+        <a href="contact.html"><span data-icon="chat"></span> Contact Us</a>
+        <a href="#"><span data-icon="pin"></span> Andhra Pradesh, India</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Ruchulu. All rights reserved.</span>
+      <span>Made for authentic Telugu flavors</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  function renderFeatured() {
+    const featured = PRODUCTS.filter(p => p.tag === "Best Seller" || p.tag === "Today's Special").slice(0,4)
+      .concat(PRODUCTS.filter(p => !["Best Seller","Today's Special"].includes(p.tag))).slice(0,8);
+    document.getElementById("featuredGrid").innerHTML = featured.map(productCardHTML).join("");
+    refreshBadges();
+  }
+  renderFeatured(); // paint instantly with the built-in catalog
+  syncCatalogWithBackend().then((usedApi) => { if (usedApi) renderFeatured(); }); // upgrade to live data if available
+</script>
+</body>
+</html>

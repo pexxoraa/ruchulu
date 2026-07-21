@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login — Ruchulu</title>
+<meta name="description" content="Staff login for the Ruchulu admin dashboard.">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body style="background:var(--brown);">
+
+<div class="auth-shell">
+  <div class="auth-card">
+    <div class="logo-mark-wrap"><img src="images/logo.png" alt="Ruchulu"></div>
+    <div class="admin-login-badge" style="display:flex; justify-content:center; margin:0 auto 14px; width:fit-content;"><span data-icon="lock"></span> Staff Access</div>
+    <h1>Admin Login</h1>
+    <p class="auth-sub">Sign in with your Ruchulu staff account to manage orders.</p>
+
+    <div class="auth-banner" id="authBanner"></div>
+
+    <form id="adminLoginForm">
+      <div class="form-field">
+        <label for="li-email">Email</label>
+        <input id="li-email" type="email" required placeholder="you@ruchulu.com" autocomplete="email">
+      </div>
+      <div class="form-field">
+        <label for="li-password">Password</label>
+        <input id="li-password" type="password" required placeholder="Your password" autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn-primary btn-block auth-submit" id="loginSubmit">
+        <span class="spinner"></span><span class="btn-label">Sign In</span>
+      </button>
+    </form>
+
+    <p class="auth-switch"><a href="index.html">← Back to the storefront</a></p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+(function(){
+  const STAFF_ROLES = ["ADMIN", "SUPER_ADMIN", "MANAGER"];
+
+  // Already logged in as staff? Skip straight to the dashboard.
+  if (AuthStore.isLoggedIn() && STAFF_ROLES.includes(AuthStore.getUser()?.role)) {
+    window.location.href = "admin-orders.html";
+    return;
+  }
+
+  const form = document.getElementById("adminLoginForm");
+  const banner = document.getElementById("authBanner");
+  const submitBtn = document.getElementById("loginSubmit");
+
+  function showBanner(message, type){
+    banner.textContent = message;
+    banner.className = "auth-banner show " + type;
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    banner.classList.remove("show");
+    submitBtn.classList.add("loading");
+    submitBtn.disabled = true;
+
+    try {
+      const json = await apiFetchJson("/auth/login", {
+        method: "POST",
+        body: JSON.stringify({
+          email: document.getElementById("li-email").value.trim(),
+          password: document.getElementById("li-password").value,
+        }),
+      });
+
+      if (!STAFF_ROLES.includes(json.data.user.role)) {
+        AuthStore.clear();
+        showBanner("This account doesn't have admin access.", "error");
+        submitBtn.classList.remove("loading");
+        submitBtn.disabled = false;
+        return;
+      }
+
+      AuthStore.setToken(json.data.accessToken);
+      AuthStore.setUser(json.data.user);
+      showBanner("Signed in — redirecting...", "success");
+      setTimeout(() => { window.location.href = "admin-orders.html"; }, 400);
+    } catch (err) {
+      showBanner(err.message || "Login failed. Please check your details and try again.", "error");
+      submitBtn.classList.remove("loading");
+      submitBtn.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>
