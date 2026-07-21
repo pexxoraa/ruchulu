@@ -1,0 +1,98 @@
+# Full Ruchulu stack: Postgres + Redis + API + Nginx (serving the static
+# frontend and reverse-proxying /api, /docs, /health to the API).
+#
+# Quick start:
+#   cp backend/.env.example backend/.env   # then edit backend/.env
+#   docker compose up --build
+#   -> site:    http://localhost
+#   -> api docs: http://localhost/docs
+#
+# The frontend talks to the API via same-origin relative paths (/api/v1/...),
+# so no CORS configuration or hardcoded hostnames are needed — nginx is the
+# single entry point for both.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ruchulu_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ruchulu
+      POSTGRES_PASSWORD: ruchulu_password
+      POSTGRES_DB: ruchulu_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ruchulu -d ruchulu_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - ruchulu_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: ruchulu_redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - ruchulu_network
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ruchulu_api
+    restart: unless-stopped
+    env_file: ./backend/.env
+    environment:
+      DATABASE_URL: postgresql://ruchulu:ruchulu_password@postgres:5432/ruchulu_db?schema=public
+      REDIS_URL: redis://redis:6379
+      CORS_ORIGINS: http://localhost,http://localhost:80
+      CLIENT_URL: http://localhost
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend/logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+    networks:
+      - ruchulu_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: ruchulu_nginx
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./frontend:/usr/share/nginx/html:ro
+    networks:
+      - ruchulu_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  ruchulu_network:
+    driver: bridge
